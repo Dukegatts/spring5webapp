@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Book
@@ -21,7 +22,8 @@ public class Book
 
 	private String isbn;
 
-	private String publisher;
+	@OneToOne
+	private Publisher publisher;
 
 	@ManyToMany
 	@JoinTable(name="author_book", joinColumns = @JoinColumn(name="book_id"), inverseJoinColumns = @JoinColumn(name="author_id"))
@@ -31,7 +33,14 @@ public class Book
 		// nothing
 	}
 
-	public Book(final String title, final String isbn, final String publisher, final Set<Author> authors)
+	public Book(final String title, final String isbn, final Publisher publisher)
+	{
+		this.title = title;
+		this.isbn = isbn;
+		this.publisher = publisher;
+	}
+
+	public Book(final String title, final String isbn, final Publisher publisher, final Set<Author> authors)
 	{
 		this.title = title;
 		this.isbn = isbn;
@@ -69,12 +78,12 @@ public class Book
 		this.isbn = isbn;
 	}
 
-	public String getPublisher()
+	public Publisher getPublisher()
 	{
 		return publisher;
 	}
 
-	public void setPublisher(final String publisher)
+	public void setPublisher(final Publisher publisher)
 	{
 		this.publisher = publisher;
 	}
@@ -87,36 +96,5 @@ public class Book
 	public void setAuthors(final Set<Author> authors)
 	{
 		this.authors = authors;
-	}
-
-	@Override
-	public boolean equals(final Object o)
-	{
-		if ( this == o ) {
-			return true;
-		}
-		if ( o == null || getClass() != o.getClass() ) {
-			return false;
-		}
-
-		final Book book = (Book) o;
-
-		if ( !id.equals(book.id) ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return id.hashCode();
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Book{" + "id=" + id + ", title='" + title + '\'' + ", isbn='" + isbn + '\'' + ", publisher='" + publisher + '\'' + ", authors=" + authors + '}';
 	}
 }

@@ -26,6 +26,12 @@ public class Author
 		// nothing
 	}
 
+	public Author(final String firstName, final String lastName)
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
 	public Author(final String firstName, final String lastName, final Set<Book> books)
 	{
 		this.firstName = firstName;
@@ -71,36 +77,5 @@ public class Author
 	public void setBooks(final Set<Book> books)
 	{
 		this.books = books;
-	}
-
-	@Override
-	public boolean equals(final Object o)
-	{
-		if ( this == o ) {
-			return true;
-		}
-		if ( o == null || getClass() != o.getClass() ) {
-			return false;
-		}
-
-		final Author author = (Author) o;
-
-		if ( !id.equals(author.id) ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return id.hashCode();
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Author{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", books=" + books + '}';
 	}
 }
